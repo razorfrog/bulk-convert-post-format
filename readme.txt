@@ -1,9 +1,9 @@
 === Bulk Convert Post Format ===
-Contributors: razorfrog
-Donate link: http://razorfrog.com/
+Contributors: Razorfrog
+Donate link: https://razorfrog.com/
 Tags: post formats, bulk convert
 Requires at least: 3.1
-Tested up to: 4.6
+Tested up to: 5.4
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -32,6 +32,10 @@ Not at this time.
 2. Location in the Tools menu
 
 == Changelog ==
+
+1.02
+
+* Compatibility update
 
 1.01
 
