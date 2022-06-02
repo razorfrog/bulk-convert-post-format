@@ -1,13 +1,13 @@
 <?php
 /**
  * @package Bulk Convert Post Format
- * @version 1.1.0
+ * @version 1.1.1
  */
 /*
 Plugin Name: Bulk Convert Post Format
 Plugin URI: https://razorfrog.com/bulk-edit-wordpress-post-format/
 Description: Bulk convert posts in a category to a selected post format.
-Version: 1.1.0
+Version: 1.1.1
 Author: Razorfrog Web Design
 Author URI: https://razorfrog.com/
 License: GPLv2 or later
