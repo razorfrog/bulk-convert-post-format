@@ -1,13 +1,13 @@
 <?php
 /**
  * @package Bulk Convert Post Format
- * @version 1.1.2
+ * @version 1.1.3
  */
 /*
 Plugin Name: Bulk Convert Post Format
 Plugin URI: https://razorfrog.com/bulk-edit-wordpress-post-format/
 Description: Bulk convert posts in a category to a selected post format.
-Version: 1.1.2
+Version: 1.1.3
 Author: Razorfrog Web Design
 Author URI: https://razorfrog.com/
 License: GPLv2 or later
@@ -29,10 +29,10 @@ function loadjs_admin_head() {
 }
 
 function category_to_post_format_page() {
-	$category_post = $_POST[ 'category' ];
-	$post_format_post = $_POST[ 'post_format' ];
-	$start_from = $_POST[ 'start_from' ];
-	$posts_per_page = $_POST[ 'posts_per_page' ];
+    $category_post = isset($_POST['category']) ? $_POST['category'] : '';
+    $post_format_post = isset($_POST['post_format']) ? $_POST['post_format'] : '';
+    $start_from = isset($_POST['start_from']) ? $_POST['start_from'] : '';
+    $posts_per_page = isset($_POST['posts_per_page']) ? $_POST['posts_per_page'] : '';
 	?>
 
 	<div class="wrap">
