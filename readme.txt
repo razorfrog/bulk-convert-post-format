@@ -3,8 +3,8 @@ Contributors: razorfrog
 Donate link: https://razorfrog.com/
 Tags: post formats, bulk convert
 Requires at least: 3.1
-Tested up to: 6.3.2
-Stable tag: 1.1.3
+Tested up to: 6.5.3
+Stable tag: 1.1.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,7 +12,7 @@ Bulk convert posts in a category to a selected post format.
 
 == Description ==
 
-Bulk convert posts in a category to a selected post format. Select from a dropdown of categories and a dropdown of defined post formats. 
+Bulk convert posts in a category to a selected post format. Select from a dropdown of categories and a dropdown of defined post formats.
 
 == Installation ==
 
@@ -22,9 +22,13 @@ Bulk convert posts in a category to a selected post format. Select from a dropdo
 
 == Frequently Asked Questions ==
 
-= Can I convert only some posts and not a whole category?  =
+= Can I convert custom post types or custom taxonomies? =
 
-Not at this time.
+Our plugin currently supports only standard post types and the standard category taxonomy.
+
+= Can I convert only some posts and not an entire category? =
+
+Not at this time. An easy workaround would be to create a temporary category to select the specific posts you want to convert. After the conversion, you can delete the temporary category.
 
 == Screenshots ==
 
@@ -32,6 +36,13 @@ Not at this time.
 2. Location in the Tools menu
 
 == Changelog ==
+
+1.1.4
+
+* Enhanced category dropdown to display terms hierarchically along with their post count.
+* Improved post query to exclude posts in child categories, ensuring accurate conversions.
+* Refined text in progress and completion pages for better clarity and user experience.
+* WP Core compatibility update
 
 1.1.3
 
