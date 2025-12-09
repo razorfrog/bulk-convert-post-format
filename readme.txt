@@ -1,12 +1,12 @@
 === Bulk Convert Post Format ===
 Contributors: razorfrog
-Donate link: https://razorfrog.com/
 Tags: post formats, bulk convert
-Requires at least: 3.1
-Tested up to: 6.5.3
-Stable tag: 1.1.4
+Requires at least: 5.2
+Tested up to: 6.9
+Requires PHP: 7.2
+Stable tag: 1.1.5
 License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
 Bulk convert posts in a category to a selected post format.
 
@@ -36,6 +36,11 @@ Not at this time. An easy workaround would be to create a temporary category to 
 2. Location in the Tools menu
 
 == Changelog ==
+
+1.1.5
+
+* Security updates
+* WP Core 6.9 compatibility update
 
 1.1.4
 
