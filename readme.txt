@@ -4,7 +4,7 @@ Tags: post formats, bulk convert
 Requires at least: 5.2
 Tested up to: 6.9
 Requires PHP: 7.2
-Stable tag: 1.1.5
+Stable tag: 1.1.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -36,6 +36,11 @@ Not at this time. An easy workaround would be to create a temporary category to 
 2. Location in the Tools menu
 
 == Changelog ==
+
+1.1.6
+
+* Renamed the plugin's functions with a unique prefix to avoid conflicts with other plugins and themes
+* Fixed the progress message and the "Convert again" link on sites installed in a subfolder
 
 1.1.5
 
