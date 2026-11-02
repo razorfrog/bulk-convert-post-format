@@ -15,18 +15,25 @@
  */
 
 // Menu
-add_action('admin_menu', 'register_my_custom_menu_page');
+add_action('admin_menu', 'bulk_convert_post_format_menu');
 
-function register_my_custom_menu_page() {
-		$page = add_management_page('Bulk Edit Post Format', 'Bulk Edit Post Format', 'manage_options', 'converter', 'category_to_post_format_page');
-		add_action("admin_print_scripts-$page", 'loadjs_admin_head');
+function bulk_convert_post_format_menu() {
+		$page = add_management_page('Bulk Edit Post Format', 'Bulk Edit Post Format', 'manage_options', 'converter', 'bulk_convert_post_format_page');
+		add_action("admin_print_scripts-$page", 'bulk_convert_post_format_scripts');
 }
 
-function loadjs_admin_head() {
-		wp_enqueue_script('loadjs', plugins_url('/post_to_url.js', __FILE__));
+function bulk_convert_post_format_scripts() {
+		// Loaded in the head: the progress page calls post_to_url() inline.
+		wp_enqueue_script(
+				'bulk-convert-post-format',
+				plugins_url( '/post_to_url.js', __FILE__ ),
+				array(),
+				(string) filemtime( plugin_dir_path( __FILE__ ) . 'post_to_url.js' ),
+				false
+		);
 }
 
-function category_to_post_format_page() {
+function bulk_convert_post_format_page() {
 		// Check nonce first.
 		$has_valid_nonce = isset( $_POST['bulk_convert_post_format_nonce'] ) && wp_verify_nonce(
 				sanitize_text_field( wp_unslash( $_POST['bulk_convert_post_format_nonce'] ) ),
@@ -55,7 +62,7 @@ function category_to_post_format_page() {
 						echo '<div style="background: #e5e5e5; width: 100%; padding: 20px; margin: 10px 0 0; box-sizing: border-box;">
 														<h2 style="margin: 0; line-height: 1.6;">Done!</h2>
 														<p style="margin: 10px 0 20px;">' . esc_html( $total_converted ) . ' post(s) have been converted to ' . esc_html( $post_format_post ) . ' format.</p>
-														<a class="button-primary" href="/wp-admin/tools.php?page=converter">Convert again</a>
+														<a class="button-primary" href="' . esc_url( admin_url( 'tools.php?page=converter' ) ) . '">Convert again</a>
 												</div>';
 						return;
 				}
@@ -69,7 +76,7 @@ function category_to_post_format_page() {
 
 				echo '<div style="background: #e5e5e5; width: 100%; padding: 20px; margin: 10px 0 0; box-sizing: border-box;">
 												<h2 style="margin: 0; line-height: 1.6;">This page reloads automatically.</h2>
-												<p style="margin: 10px 0 0;">Converting...  ' . esc_html( $total_converted ) . ' out of ' . esc_html( $total_converted ) . ' posts done. </p>';
+												<p style="margin: 10px 0 0;">Converting... ' . esc_html( $total_converted ) . ' post(s) converted so far.</p>';
 
 				$nonce = sanitize_text_field( wp_unslash( $_POST['bulk_convert_post_format_nonce'] ) );
 
@@ -108,7 +115,7 @@ function category_to_post_format_page() {
 										'order'      => 'ASC',
 										'parent'     => 0,
 								) );
-								get_category_options( $categories );
+								bulk_convert_post_format_category_options( $categories );
 								?>
 						</select>
 						<label>To post format:</label>
@@ -154,7 +161,7 @@ function category_to_post_format_page() {
 		<?php
 }
 
-function get_category_options( $categories, $depth = 0 ) {
+function bulk_convert_post_format_category_options( $categories, $depth = 0 ) {
 	 foreach ( $categories as $category ) {
 		  $category_count = (int) $category->count;
 
@@ -174,7 +181,7 @@ function get_category_options( $categories, $depth = 0 ) {
 		  );
 
 		  if ( ! empty( $child_categories ) ) {
-				get_category_options( $child_categories, $depth + 1 );
+				bulk_convert_post_format_category_options( $child_categories, $depth + 1 );
 		  }
 	 }
 }
