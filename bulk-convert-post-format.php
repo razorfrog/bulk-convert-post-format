@@ -14,6 +14,8 @@
  * Text Domain:       bulk-convert-post-format
  */
 
+defined( 'ABSPATH' ) || exit;
+
 // Menu
 add_action('admin_menu', 'bulk_convert_post_format_menu');
 
@@ -34,6 +36,10 @@ function bulk_convert_post_format_scripts() {
 }
 
 function bulk_convert_post_format_page() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+				wp_die( esc_html__( 'You do not have permission to access this page.', 'bulk-convert-post-format' ) );
+		}
+
 		// Check nonce first.
 		$has_valid_nonce = isset( $_POST['bulk_convert_post_format_nonce'] ) && wp_verify_nonce(
 				sanitize_text_field( wp_unslash( $_POST['bulk_convert_post_format_nonce'] ) ),
