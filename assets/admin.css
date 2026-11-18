@@ -1,0 +1,109 @@
+/* Razorfrog header and sidebar. */
+
+.bcpf-header {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	margin: 16px 0 8px;
+}
+
+.bcpf-header img {
+	border-radius: 10px;
+}
+
+.bcpf-wrap .bcpf-header h1 {
+	padding: 0;
+	margin: 0;
+	line-height: 1.2;
+}
+
+.bcpf-header p {
+	margin: 2px 0 0;
+	color: #646970;
+}
+
+.bcpf-layout {
+	display: flex;
+	align-items: flex-start;
+	gap: 24px;
+}
+
+.bcpf-main {
+	flex: 1 1 auto;
+	min-width: 0;
+}
+
+.bcpf-sidebar {
+	flex: 0 0 280px;
+	margin-top: 20px;
+}
+
+.bcpf-box {
+	background: #fff;
+	border: 1px solid #c3c4c7;
+	border-radius: 4px;
+	padding: 16px;
+	margin-bottom: 16px;
+}
+
+.bcpf-box h2 {
+	font-size: 14px;
+	margin: 0 0 10px;
+}
+
+.bcpf-about {
+	border-top: 4px solid #1aa38c;
+}
+
+.bcpf-logo {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	font-size: 16px;
+	font-weight: 600;
+	color: #1d2327;
+	text-decoration: none;
+}
+
+.bcpf-logo img {
+	border-radius: 8px;
+}
+
+.bcpf-buttons {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+	margin-bottom: 0;
+}
+
+.bcpf-plugins {
+	margin: 0;
+}
+
+.bcpf-plugins li {
+	margin: 0 0 10px;
+}
+
+.bcpf-plugins li:last-child {
+	margin-bottom: 0;
+}
+
+.bcpf-plugins a {
+	font-weight: 600;
+}
+
+.bcpf-plugins span {
+	display: block;
+	color: #646970;
+	font-size: 12px;
+}
+
+@media screen and (max-width: 960px) {
+	.bcpf-layout {
+		display: block;
+	}
+
+	.bcpf-sidebar {
+		max-width: 520px;
+	}
+}

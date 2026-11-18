@@ -4,7 +4,7 @@
  * Plugin Name:       Bulk Convert Post Format
  * Plugin URI:        https://razorfrog.com/bulk-edit-wordpress-post-format/
  * Description:       Bulk convert posts in a category to a selected post format.
- * Version:           1.1.6
+ * Version:           1.2.0
  * Requires at least: 5.2
  * Requires PHP:      7.2
  * Author:            Razorfrog Web Design
@@ -16,6 +16,8 @@
 
 defined( 'ABSPATH' ) || exit;
 
+define( 'BULK_CONVERT_POST_FORMAT_VERSION', '1.2.0' );
+
 // Menu
 add_action('admin_menu', 'bulk_convert_post_format_menu');
 
@@ -23,6 +25,19 @@ function bulk_convert_post_format_menu() {
 		$page = add_management_page('Bulk Edit Post Format', 'Bulk Edit Post Format', 'manage_options', 'converter', 'bulk_convert_post_format_page');
 		add_action("admin_print_scripts-$page", 'bulk_convert_post_format_scripts');
 }
+
+function bulk_convert_post_format_admin_styles( $hook_suffix ) {
+		if ( 'tools_page_converter' !== $hook_suffix ) {
+				return;
+		}
+		wp_enqueue_style(
+				'bulk-convert-post-format-admin',
+				plugins_url( 'assets/admin.css', __FILE__ ),
+				array(),
+				(string) filemtime( plugin_dir_path( __FILE__ ) . 'assets/admin.css' )
+		);
+}
+add_action( 'admin_enqueue_scripts', 'bulk_convert_post_format_admin_styles' );
 
 function bulk_convert_post_format_scripts() {
 		// Loaded in the head: the progress page calls post_to_url() inline.
@@ -107,8 +122,26 @@ function bulk_convert_post_format_page() {
 		) );
 		$formats    = get_post_format_slugs();
 		?>
-		<div class="wrap">
-				<h1>Bulk Convert Posts to New Post Format</h1>
+		<div class="wrap bcpf-wrap">
+				<div class="bcpf-header">
+			<img src="<?php echo esc_url( plugins_url( 'assets/razorfrog-icon.png', __FILE__ ) ); ?>" alt="" width="48" height="48" />
+			<div>
+				<h1><?php esc_html_e( 'Bulk Convert Post Format', 'bulk-convert-post-format' ); ?></h1>
+				<p>
+					<?php
+					printf(
+						/* translators: %s: Razorfrog, linked to its website. */
+						esc_html__( 'by %s', 'bulk-convert-post-format' ),
+						'<a href="https://razorfrog.com/" target="_blank" rel="noopener noreferrer">Razorfrog</a>'
+					);
+					?>
+					&middot; <?php echo esc_html( sprintf( /* translators: %s: plugin version. */ __( 'Version %s', 'bulk-convert-post-format' ), BULK_CONVERT_POST_FORMAT_VERSION ) ); ?>
+				</p>
+			</div>
+		</div>
+				<h2 class="bcpf-title">Bulk Convert Posts to New Post Format</h2>
+				<div class="bcpf-layout">
+				<div class="bcpf-main">
 				<form method="POST" action="" id="bulk-convert-post-format">
 						<?php wp_nonce_field( 'bulk_convert_post_format_action', 'bulk_convert_post_format_nonce' ); ?>
 						<label>Convert all post in category:</label>
@@ -135,6 +168,9 @@ function bulk_convert_post_format_page() {
 						<p>Choose a lower value if the tool does not finish.</p>
 						<input class="button-primary" type="submit" value="Convert" />
 				</form>
+				</div>
+				<?php bulk_convert_post_format_sidebar(); ?>
+				</div>
 		</div>
 		<style>
 				form#bulk-convert-post-format {
@@ -165,6 +201,47 @@ function bulk_convert_post_format_page() {
 				}
 		</style>
 		<?php
+}
+
+/**
+ * The Razorfrog sidebar: who makes the plugin, where to get help, and our other plugins.
+ */
+function bulk_convert_post_format_sidebar() {
+	$wporg   = 'https://wordpress.org/plugins/';
+	$plugins = array(
+			'cinza-grid' => array( 'Cinza Grid', __( 'A minimal grid plugin built with Isotope.', 'bulk-convert-post-format' ) ),
+			'cinza-slider' => array( 'Cinza Slider', __( 'A minimal slider plugin built with Flickity.', 'bulk-convert-post-format' ) ),
+			'easy-content-lists' => array( 'Easy Content Lists', __( 'Shortcodes for listing your pages, posts, taxonomies and tags.', 'bulk-convert-post-format' ) ),
+			'woo-product-dropdown-widget' => array( 'Product Dropdown Widget for WooCommerce', __( 'A dropdown of WooCommerce products, by category, sorted by price, reviews or more.', 'bulk-convert-post-format' ) ),
+			'spinitron-player' => array( 'Spinitron Player', __( 'A streaming player for radio stations that use Spinitron.', 'bulk-convert-post-format' ) ),
+			'link-in-bio-report' => array( 'Link in Bio Report', __( 'Counts taps on your Instagram links page and emails a weekly report.', 'bulk-convert-post-format' ) ),
+	);
+	?>
+	<div class="bcpf-sidebar">
+		<div class="bcpf-box bcpf-about">
+			<a href="https://razorfrog.com/" target="_blank" rel="noopener noreferrer" class="bcpf-logo">
+				<img src="<?php echo esc_url( plugins_url( 'assets/razorfrog-icon.png', __FILE__ ) ); ?>" alt="" width="40" height="40" />
+				<span>Razorfrog</span>
+			</a>
+			<p><?php esc_html_e( 'Bulk Convert Post Format is a free plugin by Razorfrog, a web agency in San Francisco.', 'bulk-convert-post-format' ); ?></p>
+			<p class="bcpf-buttons">
+				<a class="button" href="https://wordpress.org/support/plugin/bulk-convert-post-format/" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'Get help', 'bulk-convert-post-format' ); ?></a>
+				<a class="button" href="https://wordpress.org/support/plugin/bulk-convert-post-format/reviews/#new-post" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'Leave a review', 'bulk-convert-post-format' ); ?></a>
+			</p>
+		</div>
+		<div class="bcpf-box">
+			<h2><?php esc_html_e( 'More free plugins from Razorfrog', 'bulk-convert-post-format' ); ?></h2>
+			<ul class="bcpf-plugins">
+				<?php foreach ( $plugins as $plugin_slug => $plugin ) : ?>
+					<li>
+						<a href="<?php echo esc_url( $wporg . $plugin_slug . '/' ); ?>" target="_blank" rel="noopener noreferrer"><?php echo esc_html( $plugin[0] ); ?></a>
+						<span><?php echo esc_html( $plugin[1] ); ?></span>
+					</li>
+				<?php endforeach; ?>
+			</ul>
+		</div>
+	</div>
+	<?php
 }
 
 function bulk_convert_post_format_category_options( $categories, $depth = 0 ) {
